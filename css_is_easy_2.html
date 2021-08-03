@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+  
+  body
+  {
+    background: url('https://yesofcorsa.com/wp-content/uploads/2017/10/Gray-Wallpaper-Free.jpg');
+    background-size: cover; 
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+  }
+  .main
+  {
+    background: white;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  }
+
+  a
+  {
+    color: white;
+    transition: 0.1s;
+    text-decoration: none;
+  }
+  a:hover
+  {
+    color: #262626;
+    background: white;
+    border-radius: 5px;
+  }
+  
+  .unused
+  {
+    display: block;
+  }
+
+  .feed
+  {
+    position: relative;
+    height: 100%;
+  }
+  .line
+  {
+    position: relative;
+    background: #262626;
+    width: 80%;
+    height: 0.5px;
+    margin-left: 8%;
+    opacity: 0.4;
+  }
+  .additional_links > a
+  {
+      color: #656E70;
+      text-decoration: none;
+      margin-left: 10px;
+  }
+   .additional_links > a:nth-child(1)
+  {
+      margin-left: 50px;
+  }
+  .additional_links > a:nth-child(2)
+  {
+      cursor: default;
+  }
+  .additional_links > a:hover
+  {
+      text-decoration: underline;
+  }
+  .intent
+  {
+    border-left: 6px solid #ABBEC3;
+    padding-left: 10px;
+  }
+
+  .motivation > p
+  {
+    color: white;
+    margin-top: 9%;
+    padding-left: 10px;
+    border-left: 8px solid #ABBEC3; 
+  }
+  .motivation
+  {
+    padding-top: 35px;
+  }
+
+  @media only screen and (max-width: 450px)
+{
+  .my_nav
+  {
+      display: flex;
+      color: white;
+      font-size: 15px;
+      margin: 0;
+      padding: 0;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+  }
+  .unused
+  {
+    display: none;
+  }
+  img
+  {
+    height: 120px;
+  }
+  .feed
+  {
+    height: 1000%;
+  }
+}
+
+</style>
+<body>
+
+<header class="container col-lg-8 col-xs-12 col-sm-12 col-md-12 mt-2 main">
+  <div class="row">
+    <div class="navbar col-lg-8 navbar-dark bg-dark col-sm-12 col-md-12 col-xs-12">
+      <ul class="navbar nav mx-auto my_nav">
+        <li class="nav-item"><a class = "nav-link item" id = "prev" href="#" >← Previous Chapter</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "pre" href="#">≡ About The Book</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "pr" href="#">§ Contents</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "p" href="#">Next Chapter →</a></li>
+      </ul>
+    </div>
+    <div class="col-lg-4 col-md-0 bg-light d-none d-lg-block">
+      <h2 class="d-flex justify-content-center pt-3">additional info</h2>
+    </div>
+  </div>
+</header>
+
+<div class="container col-lg-8 col-xs-12 col-sm-12 col-md-12 col-xl-8 mt-3 bg-white feed mb-3" style="height: auto;">
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h1 class="ml-5 display-4 mt-5">Event Queue</h1>
+              <div class="line"></div>
+              <div class="d-flex additional_links" >
+                <a href="https://gameprogrammingpatterns.com/" >Game Programming Patterns</a>
+                <a href="#"> / </a>
+                <a href="https://gameprogrammingpatterns.com/decoupling-patterns.html" >Decoupling Patterns</a>
+              </div>
+        </div>
+        <div class="col-lg-4 mt-0" style="background: #595E5F;">
+        </div>
+    </div>
+
+     <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h1 class="ml-5 mt-5 intent">Intent</h1>
+              <p class="pl-5">Decouple when a message or event is sent from when it is processed.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-0 col-md-0 col-xl-4" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h1 class="ml-5 mt-5 intent">Motivation</h1>
+              <p class="pl-5">Unless you live under one of the few rocks that still lack Internet access, you’ve probably already heard of an “event queue”. If not, maybe “message queue”, or “event loop”, or “message pump” rings a bell. To refresh your memory, let’s walk through a couple of common manifestations of the pattern.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>For most of the chapter, I use “event” and “message” interchangeably. Where the distinction matters, I’ll make it obvious.</p>
+        </div>
+    </div>
+
+     <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">GUI event loops</h2>
+              <p class="pl-5">If you’ve ever done any user interface programming, then you’re well acquainted with events. Every time the user interacts with your program — clicks a button, pulls down a menu, or presses a key — the operating system generates an event. It throws this object at your app, and your job is to grab it and hook it up to some interesting behavior.
+              This application style is so common, it’s considered a paradigm: event-driven programming.
+              In order to receive these missives, somewhere deep in the bowels of your code is an event loop. It looks roughly like this:</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>This application style is so common, it’s considered a paradigm: event-driven programming.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" >
+              <p class="pl-5">In order to receive these missives, somewhere deep in the bowels of your code is an event loop. It looks roughly like this:
+              </p>
+              <div class = "ml-5 border" style="background: #E2F6FB;">
+                <p class="pl-5" style="color: #3498DB;">while (running)</p>
+                <p class="pl-5" style="">{ </p>
+                <p class="pl-5" style="color: #299AB3;">Event event = getNextEvent();</p>
+                <p class="pl-5" style="color: gray;">    // Handle event... </p>
+                <p class="pl-5" style="background: #E2F6FA;">  }</p>
+              </div>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+       <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" style="display: inline;" >
+              <p class="pl-5">The call to <code>getNextEvent()</code> pulls a bit of unprocessed user input into your app. You route it to an event handler and, like magic, your application comes to life. The interesting part is that the application pulls in the event when it wants it. The operating system doesn’t just immediately jump to some code in your app when the user pokes a peripheral.</p>
+              <p class="pl-5">
+                That means when user input comes in, it needs to go somewhere so that the operating system doesn’t lose it between when the device driver reported the input and when your app gets around to calling getNextEvent(). That “somewhere” is a queue.
+              </p>
+              <img src="https://gameprogrammingpatterns.com/images/event-queue-loop.png" style="max-width: 100%; max-height: 100%;" />
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>
+          In contrast, interrupts from the operating system do work like that. When an interrupt happens, the OS stops whatever your app was doing and forces it to jump to an interrupt handler. This abruptness is why interrupts are so hard to work with.
+          </p>
+        </div>
+    </div>
+
+    <div class="row">
+       <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" style="display: inline;" >
+              <p class="pl-5">When user input comes in, the OS adds it to a queue of unprocessed events. When you call <code>getNextEvent()</code>, that pulls the oldest event off the queue and hands it to your application.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">Central event bus</h2>
+              <p class="pl-5">Most games aren’t event-driven like this, but it is common for a game to have its own event queue as the backbone of its nervous system. You’ll often hear “central”, “global”, or “main” used to describe it. It’s used for high level communication between game systems that want to stay decoupled.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>If you want to know why they aren’t event-driven, crack open the <a href="#">Game Loop</a> chapter.</p>
+        </div>
+    </div>
+
+    <div class="row">
+       <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" style="display: inline;" >
+              <p class="pl-5">Say your game has a tutorial system to display help boxes after specific in-game events. For example, the first time the player vanquishes a foul beastie, you want to show a little balloon that says, “Press X to grab the loot!”</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>
+         Tutorial systems are a pain to implement gracefully, and most players will spend only a fraction of their time using in-game help,so it feels like they aren’t worth the effort. But that fraction where they are using the tutorial can be invaluable for easing the player into your game.
+          </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+       <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" style="display: inline;" >
+              <p class="pl-5">Likewise, any game system can receive events from the queue. The tutorial engine registers itself with the queue and indicates it wants to receive “enemy died” events. This way, knowledge of an enemy dying makes its way from the combat system over to the tutorial engine without the two being directly aware of each other.</p>
+                       <img src="https://gameprogrammingpatterns.com/images/event-queue-central.png" style="max-width: 100%; max-height: 100%;" />
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>
+        This model where you have a shared space that entities can post information to and get notified by is similar to blackboard systems in the AI field.
+          </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+       <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12" style="display: inline;" >
+              <p class="pl-5">I thought about using this as the example for the rest of the chapter, but I’m not generally a fan of big global systems. Event queues don’t have to be for communicating across the entire game engine. They can be just as useful within a single class or domain.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h1 class="ml-5 mt-5 intent">Say what?</h1>
+              <p class="pl-5">So, instead, let’s add sound to our game. Humans are mainly visual animals, but hearing is deeply connected to our emotions and our sense of physical space. The right simulated echo can make a black screen feel like an enormous cavern, and a well-timed violin adagio can make your heartstrings hum in sympathetic resonance.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">To get our game wound for sound, we’ll start with the simplest possible approach and see how it goes. We’ll add a little “audio engine” that has an API for playing a sound given an identifier and a volume:</p>
+            <div class="border ml-5" style="background: #E2F6FB;">
+              <p><code>
+                class Audio</code></p>
+                <p><code>{</code></p>
+                <p><code>public:</code></p>
+                <p><code>static void playSound(SoundId id, int volume);</code></p>
+                <p><code>};
+              </code></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation pt-0" style="background: #595E5F;">
+          <p>
+            While I almost always shy away from the Singleton pattern, this is one of the places where it may fit since the machine likely only has one set of speakers. I’m taking a simpler approach and just making the method static.
+          </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12 mt-1">
+              <p class="pl-5 pt-3">It’s responsible for loading the appropriate sound resource, finding an available channel to play it on, and starting it up. This chapter isn’t about some platform’s real audio API, so I’ll conjure one up that we can presume is implemented elsewhere. Using it, we write our method like so:</p>
+              <div class="border ml-5" style="background: #E2F6FB;">
+              <p><code>
+                void Audio::playSound(SoundId id, int volume)</code></p>
+                <p><code>{</code></p>
+                <p><code>ResourceId resource = loadSound(id);</code></p>
+                <p><code> int channel = findOpenChannel();</code></p>
+                <p><code>if (channel == -1) return;</code></p>
+                <p><code>startSound(resource, channel, volume);</code></p>
+                <p><code>};
+              </code></p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12 mt-1">
+              <p class="pl-5 pt-3">We check that in, create a few sound files, and start sprinkling playSound() calls through our codebase like some magical audio fairy. For example, in our UI code, we play a little bloop when the selected menu item changes:</p>
+              <div class="border ml-5" style="background: #E2F6FB;">
+              <p><code>
+                class Menu</code></p>
+                <p><code>{</code></p>
+                <p><code>public:</code></p>
+                <p><code>   void onSelect(int index)</code></p>
+                <p><code>{
+    Audio::playSound(SOUND_BLOOP, VOL_MAX);</code></p>
+                <p><code>startSound(resource, channel, volume);</code></p>
+                <p><code>}</code></p>
+                <p><code>};
+              </code></p>
+            </div>
+                            <p class="pl-5 pt-3">After doing this, we notice that sometimes when you switch menu items, the whole screen freezes for a few frames. We’ve hit our first issue:</p>
+                            <p class="pl-5 ml-2"><ul><li>Problem 1: The API blocks the caller until the audio engine has completely processed the request.</li></ul></p>
+                            <p class="pl-5">Our playSound() method is synchronous — it doesn’t return back to the caller until bloops are coming out of the speakers. If a sound file has to be loaded from disc first, that may take a while. In the meantime, the rest of the game is frozen.</p>
+                            <p class="pl-5">Ignoring that for now, we move on. In the AI code, we add a call to let out a wail of anguish when an enemy takes damage from the player. Nothing warms a gamer’s heart like inflicting simulated pain on a virtual living being.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12 mt-1">
+              <p class="pl-5 pt-3">It works, but sometimes when the hero does a mighty attack, it hits two enemies in the exact same frame. That causes the game to play the wail sound twice simultaneously. If you know anything about audio, you know mixing multiple sounds together sums their waveforms. When those are the same waveform, it’s the same as one sound played twice as loud. It’s jarringly loud.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>I ran into this exact issue working on Henry Hatsworth in the Puzzling Adventure. My solution there is similar to what we’ll cover here</p>
+        </div>
+    </div>
+
+
+ 
+
+  <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12 mt-1">
+              <p class="pl-5 pt-3">We have a related problem in boss fights when piles of minions are running around causing mayhem. The hardware can only play so many sounds at one time. When we go over that limit, sounds get ignored or cut off.</p>
+              <p class="pl-5 pt-3">We have a related problem in boss fights when piles of minions are running around causing mayhem. The hardware can only play so many sounds at one time. When we go over that limit, sounds get ignored or cut off.</p>
+               <p class="pl-5 ml-2"><ul><li>Problem 2: Requests cannot be processed in aggregate.</li></ul></p>
+               <p class="pl-5 pt-3">Since our API is synchronous, it runs on the caller’s thread. When we call it from different game systems, we’re hitting our API concurrently from multiple threads. Look at that sample code. See any thread synchronization? Me neither.</p>
+              <p class="pl-5 pt-3">This is particularly egregious because we intended to have a separate thread for audio. It’s just sitting there totally idle while these other threads are busy stepping all over each other and breaking things.</p>
+               <p class="pl-5 ml-2"><ul><li>Problem 3: Requests are processed on the wrong thread.</li></ul></p>
+                <p class="pl-5 pt-3">The common theme to these problems is that the audio engine interprets a call to playSound() to mean, “Drop everything and play the sound right now!” Immediacy is the problem. Other game systems call playSound() at their convenience, but not necessarily when it’s convenient for the audio engine to handle that request. To fix that, we’ll decouple receiving a request from processing it.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">The Pattern</h2>
+              <p class="pl-5">A queue stores a series of notifications or requests in first-in, first-out order. Sending a notification enqueues the request and returns. The request processor then processes items from the queue at a later time. Requests can be handled directly or routed to interested parties. This decouples the sender from the receiver both statically and in time.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">When to Use It</h2>
+              <p class="pl-5">If you only want to decouple who receives a message from its sender, patterns like Observer and Command will take care of this with less complexity. You only need a queue when you want to decouple something in time.</p>
+              <p class="pl-5">I think of it in terms of pushing and pulling. You have some code A that wants another chunk B to do some work. The natural way for A to initiate that is by pushing the request to B.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>I mention this in nearly every chapter, but it’s worth emphasizing. Complexity slows you down, so treat simplicity as a precious resource.</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">Meanwhile, the natural way for B to process that request is by pulling it in at a convenient time in its run cycle. When you have a push model on one end and a pull model on the other, you need a buffer between them. That’s what a queue provides that simpler decoupling patterns don’t.</p>
+              <p class="pl-5">Queues give control to the code that pulls from it — the receiver can delay processing, aggregate requests, or discard them entirely. But queues do this by taking control away from the sender. All the sender can do is throw a request on the queue and hope for the best. This makes queues a poor fit when the sender needs a response.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">Keep in Mind</h2>
+              <p class="pl-5">Unlike some more modest patterns in this book, event queues are complex and tend to have a wide-reaching effect on the architecture of our games. That means you’ll want to think hard about how — or if — you use one.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h3 class="ml-5 mt-5 intent">A central event queue is a global variable</h3>
+              <p class="pl-5">One common use of this pattern is for a sort of Grand Central Station that all parts of the game can route messages through. It’s a powerful piece of infrastructure, but powerful doesn’t always mean good.</p>
+              <p class="pl-5">It took a while, but most of us learned the hard way that global variables are bad. When you have a piece of state that any part of the program can poke at, all sorts of subtle interdependencies creep in. This pattern wraps that state in a nice little protocol, but it’s still a global, with all of the danger that entails.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h3 class="ml-5 mt-5 intent">The state of the world can change under you</h3>
+              <p class="pl-5">Say some AI code posts an “entity died” event to a queue when a virtual minion shuffles off its mortal coil. That event hangs out in the queue for who knows how many frames until it eventually works its way to the front and gets processed.</p>
+              <p class="pl-5">Meanwhile, the experience system wants to track the heroine’s body count and reward her for her grisly efficiency. It receives each “entity died” event and determines the kind of entity slain and the difficulty of the kill so it can dish out an appropriate reward.</p>
+              <p class="pl-5">That requires various pieces of state in the world. We need the entity that died so we can see how tough it was. We may want to inspect its surroundings to see what other obstacles or minions were nearby. But if the event isn’t received until later, that stuff may be gone. The entity may have been deallocated, and other nearby foes may have wandered off.</p>
+              <p class="pl-5">
+                When you receive an event, you have to be careful not to assume the current state of the world reflects how the world was when the event was raised. This means queued events tend to be more data heavy than events in synchronous systems. With the latter, the notification can say “something happened” and the receiver can look around for the details. With a queue, those ephemeral details must be captured when the event is sent so they can be used later.
+              </p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h3 class="ml-5 mt-5 intent">You can get stuck in feedback loops</h3>
+              <p class="pl-5">All event and message systems have to worry about cycles:</p>
+              <ol class="ml-5">
+                <li><p>A sends an event.</p></li>
+                <li><p>B receives it and responds by sending an event.</p></li>
+                <li><p>That event happens to be one that A cares about, so it receives it. In response, it sends an event….</p></li>
+                <li><p>Go to 2.</p></li>
+              </ol>
+              <p class="pl-5">When your messaging system is synchronous, you find cycles quickly — they overflow the stack and crash your game. With a queue, the asynchrony unwinds the stack, so the game may keep running even though spurious events are sloshing back and forth in there. A common rule to avoid this is to avoid sending events from within code that’s handling one.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation pt-5" style="background: #595E5F;">
+          <p>A little debug logging in your event system is probably a good idea too.</p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <h2 class="ml-5 mt-5 intent">Sample Code</h2>
+              <p class="pl-5">We’ve already seen some code. It’s not perfect, but it has the right basic functionality — the public API we want and the right low-level audio calls. All that’s left for us to do now is fix its problems.</p>
+              <p class="pl-5">The first is that our API blocks. When a piece of code plays a sound, it can’t do anything else until playSound() finishes loading the resource and actually starts making the speaker wiggle.</p>
+              <p class="pl-5">We want to defer that work until later so that playSound() can return quickly. To do that, we need to reify the request to play a sound. We need a little structure that stores the details of a pending request so we can keep it around until later:.</p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  struct PlayMessage
+                    {
+                      SoundId id;
+                      int volume;
+                    };
+                </pre>
+              </code>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation pt-5" style="background: #595E5F;">
+          <p>A little debug logging in your event system is probably a good idea too.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">Next, we need to give Audio some storage space to keep track of these pending play messages. Now, your algorithms professor might tell you to use some exciting data structure here like a Fibonacci heap or a skip list, or, hell, at least a linked list. But in practice, the best way to store a bunch of homogenous things is almost always a plain old array:</p>
+              <ul class="ml-5">
+                <li><p>No dynamic allocation.</p></li>
+                <li><p>No memory overhead for bookkeeping information or pointers.</p></li>
+                <li><p>Cache-friendly contiguous memory usage.</p></li>
+              </ul>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>For lots more on what being “cache friendly” means, see the chapter on Data Locality.</p>
+        </div>
+    </div>
+
+
+     <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">So let’s do that:</p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  class Audio
+                  {
+                  public:
+                    static void init()
+                    {
+                      numPending_ = 0;
+                    }
+
+                    // Other stuff...
+                  private:
+                    static const int MAX_PENDING = 16;
+
+                    static PlayMessage pending_[MAX_PENDING];
+                    static int numPending_;
+                  };
+                </pre>
+              </code>
+              </div>
+
+              <p class="pl-5">
+                We can tune the array size to cover our worst case. To play a sound, we simply slot a new message in there at the end:
+              </p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                 void Audio::playSound(SoundId id, int volume)
+                  {
+                    assert(numPending_ < MAX_PENDING);
+
+                    pending_[numPending_].id = id;
+                    pending_[numPending_].volume = volume;
+                    numPending_++;
+                  }
+                </pre>
+              </code>
+              </div>
+              <p class="pl-5">This lets playSound() return almost instantly, but we do still have to play the sound, of course. That code needs to go somewhere, and that somewhere is an update() method:</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  class Audio
+                    {
+                    public:
+                      static void update()
+                      {
+                        for (int i = 0; i < numPending_; i++)
+                        {
+                          ResourceId resource = loadSound(pending_[i].id);
+                          int channel = findOpenChannel();
+                          if (channel == -1) return;
+                          startSound(resource, channel, pending_[i].volume);
+                        }
+
+                        numPending_ = 0;
+                      }
+
+                      // Other stuff...
+                    };
+                </pre>
+              </code>
+              </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>As the name implies, this is the Update Method pattern.</p>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">Now, we need to call that from somewhere convenient. What “convenient” means depends on your game. It may mean calling it from the main game loop or from a dedicated audio thread.</p>
+              <p class="pl-5">This works fine, but it does presume we can process every sound request in a single call to update(). If you’re doing something like processing a request asynchronously after its sound resource is loaded, that won’t work. For update() to work on one request at a time, it needs to be able to pull requests out of the buffer while leaving the rest. In other words, we need an actual queue.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+             <h3 class="ml-5 mt-5 intent">A ring buffer</h3>
+              <p class="pl-5">There are a bunch of ways to implement queues, but my favorite is called a ring buffer. It preserves everything that’s great about arrays while letting us incrementally remove items from the front of the queue.</p>
+              <p class="pl-5">Now, I know what you’re thinking. If we remove items from the beginning of the array, don’t we have to shift all of the remaining items over? Isn’t that slow?</p>
+              <p class="pl-5">This is why they made us learn linked lists — you can remove nodes from them without having to shift things around. Well, it turns out you can implement a queue without any shifting in an array too. I’ll walk you through it, but first let’s get precise on some terms:</p>
+              <ul class="ml-5">
+                <li><p>The head of the queue is where requests are read from. The head is the oldest pending request.</p></li>
+                <li><p>The tail is the other end. It’s the slot in the array where the next enqueued request will be written. Note that it’s just past the end of the queue. You can think of it as a half-open range, if that helps.</p></li>
+              </ul>
+              <p class="pl-5">Since playSound() appends new requests at the end of the array, the head starts at element zero and the tail grows to the right.</p>
+              <img src="https://gameprogrammingpatterns.com/images/event-queue-queue.png" style="height: 150px; width: 100%;" />
+              <p class="pl-5">Let’s code that up. First, we’ll tweak our fields a bit to make these two markers explicit in the class:</p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  class Audio
+                  {
+                  public:
+                    static void init()
+                    {
+                      head_ = 0;
+                      tail_ = 0;
+                    }
+
+                    // Methods...
+                  private:
+                    static int head_;
+                    static int tail_;
+
+                    // Array...
+                  };
+              </pre>
+              </code>
+              </div>
+              <p class="pl-5 pt-3">In the implementation of playSound(), numPending_ has been replaced with tail_, but otherwise it’s the sam</p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  void Audio::playSound(SoundId id, int volume)
+                    {
+                      assert(tail_ < MAX_PENDING);
+
+                      // Add to the end of the list.
+                      pending_[tail_].id = id;
+                      pending_[tail_].volume = volume;
+                      tail_++;
+                    }
+
+              </pre>
+              </code>
+              </div>
+              <p class="pl-5">The more interesting change is in update():</p>
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  void Audio::update()
+                    {
+                      // If there are no pending requests, do nothing.
+                      if (head_ == tail_) return;
+
+                      ResourceId resource = loadSound(pending_[head_].id);
+                      int channel = findOpenChannel();
+                      if (channel == -1) return;
+                      startSound(resource, channel, pending_[head_].volume);
+
+                      head_++;
+                    }
+              </pre>
+              </code>
+              </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">We process the request at the head and then discard it by advancing the head pointer to the right. We detect an empty queue by seeing if there’s any distance between the head and tail.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>This is why we made the tail one past the last item. It means that the queue will be empty if the head and tail are the same index.</p>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5">Now we’ve got a queue — we can add to the end and remove from the front. There’s an obvious problem, though. As we run requests through the queue, the head and tail keep crawling to the right. Eventually, tail_ hits the end of the array, and party time is over. This is where it gets clever.</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>Do you want party time to be over? No. You do not.</p>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <img src="https://gameprogrammingpatterns.com/images/event-queue-crawl.png" style="width: 100%; height: 160px;" class="mb-3" />
+              <p class="pl-5">Notice that while the tail is creeping forward, the head is too. That means we’ve got array elements at the beginning of the array that aren’t being used anymore. So what we do is wrap the tail back around to the beginning of the array when it runs off the end. That’s why it’s called a ring buffer — it acts like a circular array of cells.</p>
+               <img src="https://gameprogrammingpatterns.com/images/event-queue-ring.png" style="width: 100%; height: 160px;" class="mb-3" />
+               <p class="pl-5">Implementing that is remarkably easy. When we enqueue an item, we just need to make sure the tail wraps around to the beginning of the array when it reaches the end:</p>
+               <div>
+                <div class="border" style="background: #E2F6FB;">
+                 <pre>
+                   <code>
+                        void Audio::playSound(SoundId id, int volume)
+                        {
+                          assert((tail_ + 1) % MAX_PENDING != head_);
+
+                          // Add to the end of the list.
+                          pending_[tail_].id = id;
+                          pending_[tail_].volume = volume;
+                          tail_ = (tail_ + 1) % MAX_PENDING;
+                        }
+                   </code>
+                 </pre>
+               </div>
+               </div>
+              <p class="pl-5">Replacing tail_++ with an increment modulo the array size wraps the tail back around. The other change is the assertion. We need to ensure the queue doesn’t overflow. As long as there are fewer than MAX_PENDING requests in the queue, there will be a little gap of unused cells between the head and the tail. If the queue fills up, those will be gone and, like some weird backwards Ouroboros, the tail will collide with the head and start overwriting it. The assertion ensures that this doesn’t happen.</p>
+              <p class="pl-5">In update(), we wrap the head around too:</p>
+              <div class="border" style="background: #E2F6FB;">
+                 <pre>
+                   <code>
+                        void Audio::update()
+                  {
+                    // If there are no pending requests, do nothing.
+                    if (head_ == tail_) return;
+
+                    ResourceId resource = loadSound(pending_[head_].id);
+                    int channel = findOpenChannel();
+                    if (channel == -1) return;
+                    startSound(resource, channel, pending_[head_].volume);
+
+                    head_ = (head_ + 1) % MAX_PENDING;
+                  }
+                   </code>
+                 </pre>
+               </div>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+             <p class="pl-5">There you go — a queue with no dynamic allocation, no copying elements around, and the cache-friendliness of a simple array.</p>
+             <h4 class="ml-5 mt-5 intent">Aggregating requests</h4>
+             <p class="pl-5">Now that we’ve got a queue in place, we can move onto the other problems. The first is that multiple requests to play the same sound end up too loud. Since we know which requests are waiting to be processed now, all we need to do is merge a request if it matches an already pending one:</p>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation " style="background: #595E5F;">
+          <p>If the maximum capacity bugs you, you can use a growable array. When the queue gets full, allocate a new array twice the size of the current array (or some other multiple), then copy the items over.
+Even though you copy when they array grows, enqueuing an item still has constant amortized complexity.</p>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <div class="border" style="background: #E2F6FB;">
+              <code>
+                <pre>
+                  void Audio::playSound(SoundId id, int volume)
+                  {
+                    // Walk the pending requests.
+                    for (int i = head_; i != tail_;
+                         i = (i + 1) % MAX_PENDING)
+                    {
+                      if (pending_[i].id == id)
+                      {
+                        // Use the larger of the two volumes.
+                        pending_[i].volume = max(volume, pending_[i].volume);
+
+                        // Don't need to enqueue.
+                        return;
+                      }
+                    }
+
+                    // Previous code...
+                  }
+              </pre>
+              </code>
+              </div>
+              <p class="pl-5 mt-3">When we get two requests to play the same sound, we collapse them to a single request for whichever is loudest. This “aggregation” is pretty rudimentary, but we could use the same idea to do more interesting batching.</p>
+              <p class="pl-5">Note that we’re merging when the request is enqueued, not when it’s processed. That’s easier on our queue since we don’t waste slots on redundant requests that will end up being collapsed later. It’s also simpler to implement.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5 mt-3">It does, however, put the processing burden on the caller. A call to playSound() will walk the entire queue before it returns, which could be slow if the queue is large. It may make more sense to aggregate in update() instead.</p>
+              <p class="pl-5">There’s something important to keep in mind here. The window of “simultaneous” requests that we can aggregate is only as big as the queue. If we process requests more quickly and the queue size stays small, then we’ll have fewer opportunities to batch things together. Likewise, if processing lags behind and the queue gets full, we’ll find more things to collapse.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>Another way to avoid the O(n) cost of scanning the queue is to use a different data structure. If we use a hash table keyed on the SoundId, then we can check for duplicates in constant time.</p>
+        </div>
+
+    </div>
+
+     <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5 mt-3">This pattern insulates the requester from knowing when the request gets processed, but when you treat the entire queue as a live data structure to be played with, then lag between making a request and processing it can visibly affect behavior. Make sure you’re OK with that before doing this.</p>
+              <h3 class="ml-5 mt-5 intent">Spanning threads</h3>
+              <p class="pl-5">Finally, the most pernicious problem. With our synchronous audio API, whatever thread called playSound() was the thread that processed the request. That’s often not what we want.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>Another way to avoid the O(n) cost of scanning the queue is to use a different data structure. If we use a hash table keyed on the SoundId, then we can check for duplicates in constant time.</p>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+              <p class="pl-5 mt-3">On today’s multi-core hardware, you need more than one thread if you want to get the most out of your chip. There are infinite ways to distribute code across threads, but a common strategy is to move each domain of the game onto its own thread — audio, rendering, AI, etc.</p>
+              <p class="pl-5">We’re in good shape to do that now that we have three critical pieces:</p>
+              <ol class="ml-5">
+                <li><p>The code for requesting a sound is decoupled from the code that plays it.</p></li>
+                <li><p>We have a queue for marshalling between the two.</p></li>
+                <li><p>The queue is encapsulated from the rest of the program.</p></li>
+              </ol>
+              <p class="pl-5">All that’s left is to make the methods that modify the queue — playSound() and update() — thread-safe. Normally, I’d whip up some concrete code to do that, but since this is a book about architecture, I don’t want to get mired in the details of any specific API or locking mechanism.</p>
+              <p class="pl-5">At a high level, all we need to do is ensure that the queue isn’t modified concurrently. Since playSound() does a very small amount of work — basically just assigning a few fields — it can lock without blocking processing for long. In update(), we wait on something like a condition variable so that we don’t burn CPU cycles until there’s a request to process.</p>
+        </div>
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>Straight-line code only runs on a single core at a time. If you don’t use threads, even if you do the asynchronous-style programming that’s in vogue, the best you’ll do is keep one core busy, which is a fraction of your CPU’s abilities.</p>
+          <p>Server programmers compensate for that by splitting their application into multiple independent processes. That lets the OS run them concurrently on different cores. Games are almost always a single process, so a bit of threading really helps.</p>
+        </div>
+
+    </div>
+
+     <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+             <h3 class="ml-5 mt-5 intent">Design Decisions</h3>
+             <p class="pl-5">Many games use event queues as a key part of their communication structure, and you can spend a ton of time designing all sorts of complex routing and filtering for messages. But before you go off and build something like the Los Angeles telephone switchboard, I encourage you to start simple. Here’s a few starter questions to consider:</p>
+             
+             <h3 class="ml-5 mt-5 intent">
+                What goes in the queue?
+             </h3>
+              <p class="pl-5">
+                I’ve used “event” and “message” interchangeably so far because it mostly doesn’t matter. You get the same decoupling and aggregation abilities regardless of what you’re stuffing in the queue, but there are some conceptual differences.
+              </p>
+
+              <ul class="ml-5">
+                <li><p>If you queue events:</p></li>
+                <p>An “event” or “notification” describes something that already happened, like “monster died”. You queue it so that other objects can respond to the event, sort of like an asynchronous Observer pattern.</p>
+                <ul type="disk">
+                  <li><p>You are likely to allow multiple listeners. Since the queue contains things that already happened, the sender probably doesn’t care who receives it. From its perspective, the event is in the past and is already forgotten.</p></li>
+                  <li><p>The scope of the queue tends to be broader. Event queues are often used to broadcast events to any and all interested parties. To allow maximum flexibility for which parties can be interested, these queues tend to be more globally visible.</p></li>
+                </ul>
+                <li><p>If you queue messages:</p></li>
+                <p>A “message” or “request” describes an action that we want to happen in the future, like “play sound”. You can think of this as an asynchronous API to a service.</p>
+                <ul type="disk">
+                  <li><p>You are more likely to have a single listener. In the example, the queued messages are requests specifically for the audio API to play a sound. If other random parts of the game engine started stealing messages off the queue, it wouldn’t do much good.</p></li>
+                </ul>
+              </ul>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation" style="background: #595E5F;">
+          <p>Another word for “request” is “command”, as in the Command pattern, and queues can be used there too.
+I say “more likely” here, because you can enqueue messages without caring which code processes it, as long as it gets processed how you expect. In that case, you’re doing something akin to a service locator.</p>
+        </div>
+    </div>
+
+
+       <div class="row">
+        <div class="col-md-12 col-xs-12 col-lg-8 col-sm-12">
+             <h2 class="ml-5 mt-5 intent">See also</h2>
+             <ul class="ml-5 mt-3">
+               <li><p>I’ve mentioned this a few times already, but in many ways, this pattern is the asynchronous cousin to the well-known Observer pattern.</p></li>
+               <li><p>Like many patterns, event queues go by a number of aliases. One established term is “message queue”. It’s usually referring to a higher-level manifestation. Where our event queues are within an application, message queues are usually used for communicating between them.</p>
+                <p>Another term is “publish/subscribe”, sometimes abbreviated to “pubsub”. Like “message queue”, it usually refers to larger distributed systems unlike the humble coding pattern we’re focused on.</p>
+               </li>
+               <li><p>A finite state machine, similar to the Gang of Four’s State pattern, requires a stream of inputs. If you want it to respond to those asynchronously, it makes sense to queue them.</p></li>
+               <li><p>When you have a bunch of state machines sending messages to each other, each with a little queue of pending inputs (called a mailbox), then you’ve re-invented the actor model of computation.</p></li>
+               <li><p>The Go programming language’s built-in “channel” type is essentially an event or message queue.</p></li>
+             </ul>
+        </div>
+
+        <div class="col-lg-4 mt-0 col-sm-12 col-md-12 col-xl-4 motivation unused" style="background: #595E5F;">
+        </div>
+    </div>
+
+     <header class="container col-lg-12 col-xs-12 col-sm-12 col-md-12 mt-2 main ml-auto p-0">
+  <div class="row">
+    <div class="navbar col-lg-12 navbar-dark bg-dark col-sm-12 col-md-12 col-xs-12">
+      <ul class="navbar nav mx-auto my_nav">
+        <li class="nav-item"><a class = "nav-link item" id = "prev" href="#" >← Previous Chapter</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "pre" href="#">≡ About The Book</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "pr" href="#">§ Contents</a></li>
+        <li class="nav-item"><a class = "nav-link item" id = "p" href="#">Next Chapter →</a></li>
+      </ul>
+    </div>
+  </div>  
+  </header>
+
+</div>
+
+
+
+</body>
+
+  <script type="text/javascript">
+
+    function myFunction(x,id, val, val2) {
+  if (x.matches) { // If media query matches
+    id.innerHTML = "<a>" + val + "</a>";
+  } 
+  else
+  {
+     id.innerHTML = "<a>" + val2 + "</a>";
+  }
+}
+
+var x = window.matchMedia("(max-width: 450px)");
+var href = document.getElementById("prev");
+myFunction(x, href, "←Previous", "← Previous Chapter"); // Call listener function at run time
+href = document.getElementById("pre");
+x.addListener(myFunction);
+myFunction(x, href, "≡Book", "≡ About the Book"); // Call listener function at run time
+href = document.getElementById("pr");
+x.addListener(myFunction);
+myFunction(x, href, "§Contents", "§ Contents"); // Call listener function at run time4
+href = document.getElementById("p");
+x.addListener(myFunction);
+myFunction(x, href, "Next→", "Next chapter →"); // Call listener function at run time
+x.addListener(myFunction);
+</script>
+
+</html>
